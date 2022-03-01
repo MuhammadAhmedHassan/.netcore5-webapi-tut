@@ -1,0 +1,52 @@
+# Command to create new dotnet project
+
+- dotnet new [type_of_project_to_create] -n [name_of_the_project]
+- dotnet new webapi -n Catalog
+
+# On getting the following error
+
+error NU1100: Unable to resolve 'Swashbuckle.AspNetCore (>= 5.6.3)' for 'net5.0'. et5.0'. Run the following command
+
+- dotnet nuget add source --name nuget.org https://api.nuget.org/v3/index.json
+
+# For SSL during development
+
+- dotnet dev-certs https --trust
+
+# To add a new package
+
+- dotnet add package MongoDB.Driver
+
+# To get the mongodb image from docker hub
+
+- docker run -d(run in detach mode) --rm(to destroy the container once we close the process) --name mongo(image name) -p 27017:27017(internal:external prot) -v mongodbdata:/data/db (-v -> to persist the data, when we close our docker container we still want to keep the data) mongo(name of the image)
+
+- docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo
+
+# Some docker commands
+
+- docker ps
+- docker stop mongo
+- docker volume ls
+- docker volume rm mongodbdata
+
+# To add username and password to you mongodb database
+
+- - docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password mongo(this is the name of the docker image that we want to use)
+
+# dotnet secret manager to store passwords and secret keys
+
+- dotnet user-secrets init
+
+# now to set a secret
+
+- dotnet user-secrets set {{Object}}:{{Property}} actual_value
+- dotnet user-secrets set MongoDbSettings:Password password
+
+# To add health check package for mongodb
+
+- dotnet add package AspNetCore.HealthChecks.MongoDb
+
+
+## Generate a .gitignore file
+- dotnet new gitignore
