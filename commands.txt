@@ -50,3 +50,12 @@ error NU1100: Unable to resolve 'Swashbuckle.AspNetCore (>= 5.6.3)' for 'net5.0'
 
 ## Generate a .gitignore file
 - dotnet new gitignore
+
+## Add package
+- dotnet add package MongoDB.Driver
+
+## To run catalog.yml file
+- kubectl apply -f ./catalog.yml
+
+## To scale deployment
+- kubectl scale deployment/catalog-deployment --replicas=3

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+spec:
+  selector:
+    matchLabels:
+      app: catalog
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+        - name: catalog
+          image: ah3637/catalog:v1
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+          ports:
+            - containerPort: 80
+          env:
+            - name: MongoDbSettings__Host
+              value: mongodb-service
+            - name: MongoDbSettings__Port
+              # kubectl create secret generic catalog-secrets --from-literal=mongodb-password='Pass#word1'
+              valueFrom:
+                secretKeyRef:
+                  name: catalog-secrets
+                  key: mongodb-password
+            - name: MongoDbSettings__User
+              value: 'admin'
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: catalog
+  ports:
+    - port: 80
+      targetPort: 80
