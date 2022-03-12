@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Catalog.Entities;
+using Catalog.Api.Entities;
 
-namespace Catalog.Repositories {
+namespace Catalog.Api.Repositories
+{
   public class InMemoryRepository : IItemsRepository
   {
     private readonly List<Item> items = new() {
@@ -42,6 +43,11 @@ namespace Catalog.Repositories {
       var index = items.FindIndex(itm => itm.Id == item.Id);
       items[index] = item;
       await Task.CompletedTask;
+    }
+
+    Task<Item> IItemsRepository.GetItemAsync(Guid id)
+    {
+      throw new NotImplementedException();
     }
   }
 }

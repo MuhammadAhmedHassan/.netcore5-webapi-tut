@@ -59,3 +59,9 @@ error NU1100: Unable to resolve 'Swashbuckle.AspNetCore (>= 5.6.3)' for 'net5.0'
 
 ## To scale deployment
 - kubectl scale deployment/catalog-deployment --replicas=3
+
+## To create xunit test project
+- dotnet new xunit -n Catalog.UnitTests
+
+## Add reference of api project to the test project
+- dotnet add reference ../Catalog.Api/Catalog.Api.csproj

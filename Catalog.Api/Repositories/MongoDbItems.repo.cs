@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Catalog.Entities;
+using Catalog.Api.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Catalog.Repositories
+namespace Catalog.Api.Repositories
 {
   public class MongoDbItemsRepository : IItemsRepository
   {
@@ -45,6 +45,16 @@ namespace Catalog.Repositories
     {
       var filter = filterDefinitionBuilder.Eq(exisitingItem => exisitingItem.Id, item.Id);
       await itemsCollection.ReplaceOneAsync(filter, item);
+    }
+
+    Task<Item> IItemsRepository.GetItemAsync(Guid id)
+    {
+      throw new NotImplementedException();
+    }
+
+    Task<IEnumerable<Item>> IItemsRepository.GetItemsAsync()
+    {
+      throw new NotImplementedException();
     }
   }
 }
